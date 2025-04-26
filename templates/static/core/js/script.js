@@ -68,7 +68,7 @@ function initMusicPlayer() {
         document.getElementById('track-artist').textContent = track.getAttribute('data-artist');
 
         // Simular capa do álbum (usando a primeira foto do casal)
-        document.getElementById('album-cover').src = 'img/optimized/IMG_2714.jpeg';
+        document.getElementById('album-cover').src = '../static/core/img/IMG_2714.jpeg';
 
         // Destacar música atual na playlist
         playlistItems.forEach(item => item.classList.remove('active'));
