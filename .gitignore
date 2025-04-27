@@ -1,1 +1,5 @@
+# Ambiente Virtual
 /venv
+
+# Banco de Dados Local
+db.sqlite3
