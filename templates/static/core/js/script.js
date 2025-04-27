@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Função para atualizar o contador
 function updateCountdown() {
+
+    // Data do inicio para usar no contador
     const startDate = new Date('2024-11-23');
     const currentDate = new Date();
 
