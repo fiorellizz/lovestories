@@ -11,6 +11,25 @@
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    {% for item in cliente.imagens.all %}
+    {% if item.tipo == 'hero' %}
+    <style>
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+            url('{{ item.imagem.imagem.url }}');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+    </style>
+    {% endif %}
+    {% endfor %}
+
     <link rel="shortcut icon" href="{% static 'core/img/favicon.png' %}" type="image/x-icon">
 </head>
 
@@ -22,9 +41,9 @@
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <h1>Feliz 5 Meses Minha Princesa</h1>
-            <p>Cada dia ao seu lado é uma nova razão para sorrir</p>
-            <div class="hero-date">23 de Novembro de 2024 - 23 de Abril de 2025</div>
+            <h1>{{ cliente.hero_title }}</h1>
+            <p>{{ cliente.hero_subtitle }}</p>
+            <div class="hero-date">{{ cliente.data_inicio }} - {{ data_de_hoje }}</div>
         </div>
     </section>
 
@@ -61,24 +80,9 @@
 
             <div class="letter-container">
                 <div class="letter-paper">
-                    <p>Minha princesa,</p>
-
-                    <p>Hoje completamos 5 meses juntos, e cada dia tem sido uma nova descoberta, um novo motivo para
-                        sorrir. Quero que saiba que você trouxe uma luz especial para a minha vida, um brilho que só
-                        aumenta com o passar do tempo.</p>
-
-                    <p>Nossos momentos juntos são os mais preciosos para mim. Cada risada, cada conversa, cada olhar...
-                        tudo fica gravado no meu coração. Você me faz querer ser uma pessoa melhor a cada dia.</p>
-
-                    <p>Obrigado por compartilhar sua vida comigo, por me permitir fazer parte da sua história. Obrigado
-                        por cada momento de carinho, por cada demonstração de amor.</p>
-
-                    <p>Este é apenas o começo da nossa jornada juntos. Temos muito ainda para viver, muitas histórias
-                        para criar, muitos sonhos para realizar.</p>
-
-                    <p>Te amo mais a cada dia que passa.</p>
-
-                    <p class="signature">Com todo meu amor,<br>Seu amor</p>
+                    {% for paragrafo in paragrafos %}
+                    <p>{{ paragrafo }}</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -90,49 +94,12 @@
             <p>Cada foto conta um pedaço da nossa história, cada sorriso guarda um momento especial.</p>
 
             <div class="gallery-container">
+                {% for item in imagens_history %}
                 <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_2714.jpeg' %}" alt="Nós aaaaaaaaaaaaaaa" loading="lazy">
+                    <img src="{{ item.imagem.imagem.url }}" alt="Nossa história {{ forloop.counter }}" loading="lazy">
                 </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_2365.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_2125.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_1853.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_1747.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_1426.jpg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_0790.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_0537.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_0307.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_8468.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_8168.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_7756.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_6221.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="{% static 'core/img/IMG_5944.jpeg' %}" alt="Nós juntos" loading="lazy">
-                </div>
-            </div>            
+                {% endfor %}
+            </div>
         </div>
     </section>
 
@@ -142,9 +109,11 @@
             <p>A trilha sonora do nosso amor</p>
 
             <div class="player-container">
+                {% for item in imagem_music %}
                 <div class="album-cover">
-                    <img src="{% static 'core/img/IMG_2714.jpeg' %}" alt="Capa do álbum" id="album-cover">
+                    <img src="{{ item.imagem.imagem.url }}" alt="Capa do álbum" id="album-cover">
                 </div>
+                {% endfor %}
 
                 <div class="track-info">
                     <div class="track-title" id="track-title">Mulher de Fases</div>
@@ -164,34 +133,17 @@
                 </div>
 
                 <div class="playlist">
-                    <div class="playlist-item active" data-src="{% static 'core/audio/mulher_de_fases.mp3' %}" data-title="Mulher de Fases" data-artist="Raimundos">
-                        <div class="playlist-item-number">1</div>
+                    {% for musica in musicas %}
+                    <div class="playlist-item {% if forloop.first %}active{% endif %}"
+                        data-src="{{ musica.arquivo_audio.url }}" data-title="{{ musica.titulo }}"
+                        data-artist="{{ musica.artista.nome }}">
+                        <div class="playlist-item-number">{{ forloop.counter }}</div>
                         <div class="playlist-item-info">
-                            <div class="playlist-item-title">Mulher de Fases</div>
-                            <div class="playlist-item-artist">Raimundos</div>
+                            <div class="playlist-item-title">{{ musica.titulo }}</div>
+                            <div class="playlist-item-artist">{{ musica.artista }}</div>
                         </div>
                     </div>
-                    <div class="playlist-item" data-src="{% static 'core/audio/medo_bobo.mp3' %}" data-title="Medo Bobo" data-artist="Maiara e Maraisa">
-                        <div class="playlist-item-number">2</div>
-                        <div class="playlist-item-info">
-                            <div class="playlist-item-title">Medo Bobo</div>
-                            <div class="playlist-item-artist">Maiara e Maraisa</div>
-                        </div>
-                    </div>
-                    <div class="playlist-item" data-src="{% static 'core/audio/planos_bk.mp3' %}" data-title="Planos" data-artist="BK">
-                        <div class="playlist-item-number">3</div>
-                        <div class="playlist-item-info">
-                            <div class="playlist-item-title">Planos</div>
-                            <div class="playlist-item-artist">BK</div>
-                        </div>
-                    </div>
-                    <div class="playlist-item" data-src="{% static 'core/audio/afrodite_delacruz.mp3' %}" data-title="Afrodite" data-artist="Delacruz">
-                        <div class="playlist-item-number">4</div>
-                        <div class="playlist-item-info">
-                            <div class="playlist-item-title">Afrodite</div>
-                            <div class="playlist-item-artist">Delacruz</div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -205,7 +157,7 @@
             <div class="moments-container">
                 <div class="moment-item">
                     <div class="moment-image">
-                        <img src="{% static 'core/img/IMG_2714.jpeg' %}" alt="Primeiro encontro">
+                        <img src="{{ imagens_moment.0.imagem.imagem.url }}" alt="Primeiro encontro">
                     </div>
                     <div class="moment-text">
                         <h3>Nosso Início</h3>
@@ -213,10 +165,10 @@
                             coração soube que tinha encontrado alguém especial.</p>
                     </div>
                 </div>
-                
+
                 <div class="moment-item">
                     <div class="moment-image">
-                        <img src="{% static 'core/img/IMG_1747.jpeg' %}" alt="Momentos juntos">
+                        <img src="{{ imagens_moment.1.imagem.imagem.url }}" alt="Momentos juntos">
                     </div>
                     <div class="moment-text">
                         <h3>Nossos Sorrisos</h3>
@@ -224,25 +176,25 @@
                             simples se tornam inesquecíveis.</p>
                     </div>
                 </div>
-                
+
                 <div class="moment-item">
                     <div class="moment-image">
-                        <img src="{% static 'core/img/IMG_5944.jpeg' %}" alt="Momentos especiais">
+                        <img src="{{ imagens_moment.2.imagem.imagem.url }}" alt="Momentos especiais">
                     </div>
                     <div class="moment-text">
                         <h3>Nossos Momentos</h3>
                         <p>Cada instante ao seu lado é uma nova aventura. Obrigado por tornar meus dias mais coloridos e
                             cheios de vida.</p>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-content">
-            <h3>Feliz 5 Meses de Namoro</h3>
-            <p>Que venham muitos mais meses, anos e décadas de amor, companheirismo e felicidade.</p>
+            <h3>{{ cliente.footer_title }}</h3>
+            <p>{{ cliente.footer_subtitle }}</p>
             <div class="heart-icon">❤️</div>
         </div>
     </footer>
@@ -250,6 +202,39 @@
     <div class="floating-hearts"></div>
 
     <script src="{% static 'core/js/script.js' %}"></script>
+
+    <script>
+
+        // Inicializar contador
+        updateCountdown();
+
+        // Função para atualizar o contador
+        function updateCountdown() {
+
+            // Data do inicio para usar no contador
+            const startDate = new Date('{{ cliente.data_inicio|date:"Y-m-d" }}');
+            const currentDate = new Date();
+
+            // Calcular diferença em meses
+            let months = (currentDate.getFullYear() - startDate.getFullYear()) * 12;
+            months += currentDate.getMonth() - startDate.getMonth();
+
+            // Calcular diferença em dias, horas e minutos
+            const timeDiff = currentDate - startDate;
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) % 30;
+            const hours = currentDate.getHours();
+            const minutes = currentDate.getMinutes();
+
+            // Atualizar elementos HTML
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+
+            // Atualizar a cada minuto
+            setTimeout(updateCountdown, 60000);
+        }
+    </script>
 </body>
 
 </html>

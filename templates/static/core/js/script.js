@@ -9,9 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
     }, 2000);
 
-    // Inicializar contador
-    updateCountdown();
-
     // Inicializar player de música
     initMusicPlayer();
 
@@ -21,33 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializar galeria com lightbox
     initGallery();
 });
-
-// Função para atualizar o contador
-function updateCountdown() {
-
-    // Data do inicio para usar no contador
-    const startDate = new Date('2024-11-23');
-    const currentDate = new Date();
-
-    // Calcular diferença em meses
-    let months = (currentDate.getFullYear() - startDate.getFullYear()) * 12;
-    months += currentDate.getMonth() - startDate.getMonth();
-
-    // Calcular diferença em dias, horas e minutos
-    const timeDiff = currentDate - startDate;
-    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) % 30;
-    const hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
-
-    // Atualizar elementos HTML
-    document.getElementById('months').textContent = months;
-    document.getElementById('days').textContent = days;
-    document.getElementById('hours').textContent = hours;
-    document.getElementById('minutes').textContent = minutes;
-
-    // Atualizar a cada minuto
-    setTimeout(updateCountdown, 60000);
-}
 
 // Função para inicializar o player de música
 function initMusicPlayer() {
@@ -68,9 +38,6 @@ function initMusicPlayer() {
         // Atualizar informações da música
         document.getElementById('track-title').textContent = track.getAttribute('data-title');
         document.getElementById('track-artist').textContent = track.getAttribute('data-artist');
-
-        // Simular capa do álbum (usando a primeira foto do casal)
-        document.getElementById('album-cover').src = '../static/core/img/IMG_2714.jpeg';
 
         // Destacar música atual na playlist
         playlistItems.forEach(item => item.classList.remove('active'));
