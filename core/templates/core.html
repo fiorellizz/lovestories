@@ -1,11 +1,62 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Love Stories - Presentes Digitais Criativos</title>
+    <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
 </head>
 <body>
-    <h1>Site para presentes!</h1>
+    <header>
+        <div class="container">
+            <h1>Love Stories</h1>
+            <nav>
+                <ul>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#como-funciona">Como Funciona</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <h2>Crie um presente digital único e emocionante</h2>
+            <p>Transforme suas memórias em uma experiência interativa inesquecível.</p>
+            <a href="#" class="cta-button">Comece a criar sua Love Story</a>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <div class="container">
+            <h3>Sobre o Love Stories</h3>
+            <p>O Love Stories é mais que um presente, é uma declaração de amor digital. Criamos sites personalizados com suas fotos, mensagens e momentos especiais, perfeitos para celebrar o amor em todas as suas formas. Surpreenda quem você ama com uma experiência afetiva e memorável.</p>
+        </div>
+    </section>
+
+    <section id="como-funciona">
+        <div class="container">
+            <h3>Como Funciona?</h3>
+            <p>É simples! Você nos conta sua história, envia suas fotos e mensagens, e nós transformamos tudo em um site lindo e interativo. A pessoa presenteada recebe um link exclusivo para acessar essa surpresa cheia de carinho.</p>
+        </div>
+    </section>
+
+    <section id="contato">
+        <div class="container">
+            <h3>Entre em Contato</h3>
+            <p>Quer saber mais ou encomendar sua Love Story? Fale conosco!</p>
+            <a href="mailto:contato@lovestories.com" class="cta-button">Enviar E-mail</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Love Stories. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/home.js' %}"></script>
 </body>
 </html>
