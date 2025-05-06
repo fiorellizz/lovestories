@@ -5,7 +5,4 @@
 db.sqlite3
 
 # Arquivos de Cache
-/core/__pycache__/
-/core/migrations/__pycache__/
-
-/lovestories/__pycache__/
+__pycache__/
