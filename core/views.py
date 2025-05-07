@@ -23,4 +23,4 @@ def cliente_page(request, slug):
     })
 
 def core(request):
-    return render(request, 'core.html')
+    return render(request, 'home.html')
