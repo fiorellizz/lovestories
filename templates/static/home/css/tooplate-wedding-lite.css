@@ -881,3 +881,42 @@ strong {
     padding: 30px;
   }
 }
+
+/* DEPOIMENTOS PERSONALIZADOS */
+.depoimento-avatar {
+    font-size: 5rem; /* Tamanho do ícone */
+    color: var(--primary-color); /* Cor laranja do tema */
+    width: 100%;
+    text-align: center;
+    display: block;
+    padding: 20px 0;
+}
+
+.depoimento-texto {
+    font-size: 16px !important; /* Tamanho menor que o padrão */
+    line-height: 1.4 !important;
+    margin-top: 15px;
+}
+
+.people-thumb.image-hover-thumb {
+    background: var(--section-bg-color); /* Fundo suave */
+    border-radius: 50% !important; /* Formato redondo */
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ajustes responsivos */
+@media screen and (max-width: 767px) {
+    .depoimento-avatar {
+        font-size: 4rem;
+    }
+    
+    .people-thumb.image-hover-thumb {
+        width: 150px;
+        height: 150px;
+    }
+}
