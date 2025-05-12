@@ -10,42 +10,42 @@ https://www.tooplate.com/view/2131-wedding-lite
   CUSTOM PROPERTIES ( VARIABLES )             
 -----------------------------------------*/
 :root {
-  --white-color:                  #ffffff;
-  --primary-color:                #ff5500;
-  --secondary-color:              #f1c522;
-  --section-bg-color:             #f9f9f9;
-  --custom-btn-bg-color:          #cb7575;
-  --dark-color:                   #000000;
-  --p-color:                      #717275;
-  --border-color:                 #e9eaeb;
-  --icon-color:                   #28856b;
+  --white-color: #ffffff;
+  --primary-color: #ff5500;
+  --secondary-color: #f1c522;
+  --section-bg-color: #f9f9f9;
+  --custom-btn-bg-color: #cb7575;
+  --dark-color: #000000;
+  --p-color: #717275;
+  --border-color: #e9eaeb;
+  --icon-color: #28856b;
 
-  --body-font-family:             'Source Sans Pro', sans-serif;
-  --title-font-family:            'Amatic SC', cursive;
+  --body-font-family: 'Source Sans Pro', sans-serif;
+  --title-font-family: 'Amatic SC', cursive;
 
-  --h1-font-size:                 72px;
-  --h2-font-size:                 48px;
-  --h3-font-size:                 36px;
-  --h4-font-size:                 32px;
-  --h5-font-size:                 24px;
-  --h6-font-size:                 22px;
-  --p-font-size:                  20px;
-  --menu-font-size:               14px;
-  --copyright-font-size:          16px;
+  --h1-font-size: 72px;
+  --h2-font-size: 48px;
+  --h3-font-size: 36px;
+  --h4-font-size: 32px;
+  --h5-font-size: 24px;
+  --h6-font-size: 22px;
+  --p-font-size: 20px;
+  --menu-font-size: 14px;
+  --copyright-font-size: 16px;
 
-  --border-radius-large:          100px;
-  --border-radius-medium:         20px;
-  --border-radius-small:          10px;
+  --border-radius-large: 100px;
+  --border-radius-medium: 20px;
+  --border-radius-small: 10px;
 
-  --font-weight-light:            300;
-  --font-weight-normal:           400;
-  --font-weight-medium:           500;
-  --font-weight-bold:             700;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
 }
 
 body {
-    background: var(--white-color);
-    font-family: var(--body-font-family); 
+  background: var(--white-color);
+  font-family: var(--body-font-family);
 }
 
 
@@ -109,7 +109,7 @@ ul li {
   font-weight: var(--font-weight-light);
 }
 
-a, 
+a,
 button {
   touch-action: manipulation;
   transition: all 0.3s;
@@ -223,8 +223,13 @@ strong {
 }
 
 @keyframes pulse {
-  from { transform: scale(0.8); }
-  to { transform: scale(1.2); }
+  from {
+    transform: scale(0.8);
+  }
+
+  to {
+    transform: scale(1.2);
+  }
 }
 
 
@@ -283,7 +288,7 @@ strong {
 
 .custom-btn:hover {
   background: var(--secondary-color);
-  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
   color: var(--white-color);
 }
 
@@ -336,7 +341,7 @@ strong {
   padding-bottom: 15px;
 }
 
-.navbar-nav .nav-link.active, 
+.navbar-nav .nav-link.active,
 .navbar-nav .nav-link:hover {
   color: var(--custom-btn-bg-color);
 }
@@ -411,6 +416,17 @@ strong {
 /*---------------------------------------
   HERO              
 -----------------------------------------*/
+
+.hero-container {
+  background-color: #e9dddd;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: var(--border-radius-small);
+  position: relative;
+  overflow: hidden;
+  padding: 50px;
+  height: calc(90vh - 98px);
+}
 
 .hero-container h2 {
   color: var(--custom-btn-bg-color);
@@ -506,7 +522,7 @@ strong {
   color: transparent;
   top: 50%;
   right: -11px;
-  transform: translate(0, -50%) rotate(135deg) ;
+  transform: translate(0, -50%) rotate(135deg);
 }
 
 .nav-tabs .nav-link.active::after {
@@ -515,7 +531,7 @@ strong {
   border-left-color: var(--secondary-color);
 }
 
-.nav-tabs .nav-item.show .nav-link, 
+.nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-link:focus {
   border-color: var(--border-color);
@@ -523,7 +539,7 @@ strong {
 }
 
 .nav-tabs .nav-link.active h3,
-.nav-tabs .nav-link:focus h3, 
+.nav-tabs .nav-link:focus h3,
 .nav-tabs .nav-link:hover h3 {
   color: var(--primary-color);
 }
@@ -722,6 +738,7 @@ strong {
 }
 
 @media screen and (min-width: 992px) {
+
   .the-wedding-section .image-hover-thumb,
   .the-wedding-section .google-map {
     height: 55%;
@@ -828,11 +845,11 @@ strong {
     top: inherit;
     right: 0;
     left: 50%;
-    transform: translate(-50%, 0) rotate(225deg) ;
+    transform: translate(-50%, 0) rotate(225deg);
     bottom: -11px;
   }
 
-  .nav-tabs .nav-item.show .nav-link, 
+  .nav-tabs .nav-item.show .nav-link,
   .nav-tabs .nav-link.active,
   .nav-tabs .nav-link:focus {
     border-color: var(--border-color);
@@ -846,6 +863,15 @@ strong {
 
   .people-section .section-block {
     padding-top: 10px;
+  }
+
+  .depoimento-avatar {
+    font-size: 4rem;
+  }
+
+  .people-thumb.image-hover-thumb {
+    width: 150px;
+    height: 150px;
   }
 }
 
@@ -884,39 +910,32 @@ strong {
 
 /* DEPOIMENTOS PERSONALIZADOS */
 .depoimento-avatar {
-    font-size: 5rem; /* Tamanho do ícone */
-    color: var(--primary-color); /* Cor laranja do tema */
-    width: 100%;
-    text-align: center;
-    display: block;
-    padding: 20px 0;
+  font-size: 5rem;
+  /* Tamanho do ícone */
+  color: var(--primary-color);
+  /* Cor laranja do tema */
+  width: 100%;
+  text-align: center;
+  display: block;
+  padding: 20px 0;
 }
 
 .depoimento-texto {
-    font-size: 16px !important; /* Tamanho menor que o padrão */
-    line-height: 1.4 !important;
-    margin-top: 15px;
+  font-size: 16px !important;
+  /* Tamanho menor que o padrão */
+  line-height: 1.4 !important;
+  margin-top: 15px;
 }
 
 .people-thumb.image-hover-thumb {
-    background: var(--section-bg-color); /* Fundo suave */
-    border-radius: 50% !important; /* Formato redondo */
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Ajustes responsivos */
-@media screen and (max-width: 767px) {
-    .depoimento-avatar {
-        font-size: 4rem;
-    }
-    
-    .people-thumb.image-hover-thumb {
-        width: 150px;
-        height: 150px;
-    }
+  background: var(--section-bg-color);
+  /* Fundo suave */
+  border-radius: 50% !important;
+  /* Formato redondo */
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
