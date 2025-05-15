@@ -548,7 +548,7 @@ strong {
 /*---------------------------------------
   GALLERY              
 -----------------------------------------*/
-.gallery-thumb,
+/* .gallery-thumb,
 .people-thumb {
   margin-bottom: 24px;
 }
@@ -561,6 +561,58 @@ strong {
   width: 100%;
   height: 100%;
   object-fit: cover;
+} */
+
+/*---------------------------------------
+  PRICES              
+-----------------------------------------*/
+
+.custom-card {
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  text-align: left; /* Alinha conteúdo à esquerda */
+  transition: all 0.3s ease-in-out;
+  height: 100%; /* Para os dois cards ficarem do mesmo tamanho */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.custom-card h3 {
+  font-size: 32px;
+  font-family: var(--title-font-family);
+  color: var(--primary-color);
+}
+
+.custom-card ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.custom-card ul li {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: var(--p-color);
+}
+
+.plan-header h4 {
+  font-family: var(--title-font-family);
+  font-size: 28px;
+  color: var(--dark-color);
+  margin-bottom: 0;
+}
+
+.plan-header h3 {
+  font-size: 26px;
+  font-family: var(--title-font-family);
+  font-weight: var(--font-weight-bold);
+}
+
+.custom-card.featured {
+  border: 2px solid var(--secondary-color);
+  background-color: #fff9e6;
 }
 
 
@@ -871,6 +923,17 @@ strong {
   .people-thumb.image-hover-thumb {
     width: 150px;
     height: 150px;
+  }
+
+  .pricing-equal-height {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .pricing-equal-height > div {
+    flex: 1;
+    display: flex;
   }
 }
 
