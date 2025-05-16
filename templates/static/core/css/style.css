@@ -410,6 +410,15 @@ footer {
     margin: 0 auto;
 }
 
+footer a {
+    color: white !important;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
 .footer-content h3 {
     color: white;
     font-size: 2rem;
