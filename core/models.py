@@ -60,3 +60,13 @@ class ClienteImagem(Base):
     
     def __str__(self):
         return f"{self.cliente.slug} - {self.tipo} - {self.imagem}"
+    
+class Lead(Base):
+    nome     = models.CharField("Nome", max_length=100)
+    email    = models.EmailField("Email")
+    telefone = models.CharField("Telefone", max_length=20)
+    mensagem = models.TextField("Mensagem", blank=True)
+    foi_atendido = models.BooleanField("Já atendido?", default=False)
+
+    def __str__(self):
+        return f"{self.nome} — {self.telefone} - {self.foi_atendido}"

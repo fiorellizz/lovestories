@@ -1,10 +1,13 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Cliente
-from datetime import date
-import qrcode
-from io import BytesIO
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
+
+from datetime import date
+from .models import Cliente, Lead
+from io import BytesIO
+
+import qrcode
 
 def cliente_page(request, slug):
     
@@ -27,6 +30,26 @@ def cliente_page(request, slug):
     })
 
 def core(request):
+    if request.method == 'POST':
+        nome     = request.POST.get('name', '').strip()
+        email    = request.POST.get('email', '').strip()
+        telefone = request.POST.get('phone', '').strip()
+        mensagem = request.POST.get('message', '').strip()
+
+        if nome and telefone:
+            Lead.objects.create(
+                nome=nome,
+                email=email,
+                telefone=telefone,
+                mensagem=mensagem
+            )
+            # enfileira a mensagem de sucesso
+            messages.success(request, '👍 Obrigado! Recebemos seu pedido e logo entraremos em contato pelo WhatsApp.')
+            # redireciona para a mesma URL, pulando para a seção do form
+            url = reverse('core') + '#section_5'
+            return redirect(url)
+
+    # GET (ou pós-redirect) cai aqui
     return render(request, 'home.html')
 
 def qr_page(request, slug):

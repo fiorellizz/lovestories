@@ -37,6 +37,10 @@
         .site-footer {
             background-image: url("{% static 'home/images/footer.png' %}");
         }
+
+        .rsvp-section {
+            background-image: url("{% static 'home/images/form.png' %}");
+        }
     </style>
 
     <!--
@@ -588,21 +592,29 @@
                             <h5 class="mb-4">Se interessou? <span class="text-muted">Deixa seu contato que eu falo com
                                     você!</span></h5>
 
-                            <form class="custom-form rsvp-form" role="form">
+                            <form class="custom-form rsvp-form" role="form" method="post" action="#section_5">
+                                {% csrf_token %}
+                                {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success w-100 text-center">
+                                    {{ message }}
+                                    </div>
+                                {% endfor %}
+                                {% endif %}
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6 col-12">
                                         <input type="text" name="name" id="name" class="form-control"
-                                            placeholder="Nome Completo*" required="">
+                                            placeholder="Nome Completo*" required>
                                     </div>
 
                                     <div class="col-lg-4 col-md-6 col-12">
                                         <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*"
-                                            class="form-control" placeholder="Email*" required="">
+                                            class="form-control" placeholder="Email*" required>
                                     </div>
 
                                     <div class="col-lg-4 col-12">
                                         <input type="tel" name="phone" id="phone" class="form-control"
-                                            placeholder="Telefone*" required="">
+                                            placeholder="Telefone*" required>
                                     </div>
 
                                     <div class="col-lg-12 col-12">
