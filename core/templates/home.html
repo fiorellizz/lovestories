@@ -543,7 +543,9 @@
                                 <li>📸 Galeria com até 5 imagens</li>
                                 <li>💌 Carta de amor simples</li>
                             </ul>
-                            <a href="#section_6" class="btn custom-btn mt-3">Escolher Plano</a>
+                            <a href="#" class="btn custom-btn mt-3 btn-whatsapp" data-plan="Básico">
+                                Escolher Plano
+                            </a>
                         </div>
                     </div>
 
@@ -565,7 +567,9 @@
                                 <li>⏳ Contador para datas especiais</li>
                                 <li>⚙️ Modifique o seu site até 3 vezes</li>
                             </ul>
-                            <a href="#section_6" class="btn custom-btn mt-3">Escolher Plano</a>
+                            <a href="#" class="btn custom-btn mt-3 btn-whatsapp" data-plan="Premium">
+                                Escolher Plano
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -596,9 +600,9 @@
                                 {% csrf_token %}
                                 {% if messages %}
                                 {% for message in messages %}
-                                    <div class="alert alert-success w-100 text-center">
+                                <div class="alert alert-success w-100 text-center">
                                     {{ message }}
-                                    </div>
+                                </div>
                                 {% endfor %}
                                 {% endif %}
                                 <div class="row">
@@ -669,8 +673,8 @@
                         </p>
 
                         <p>
-                            <a href="tel: 61 9 8190-4314">
-                                61 9 8190-4314
+                            <a href="https://wa.me/5561981904314?text=Olá, quero saber mais sobre a Love Stories!">
+                                61 9 9840-1140
                             </a>
                         </p>
                     </div>
@@ -727,6 +731,27 @@
     <script src="{% static 'home/js/jquery.magnific-popup.min.js' %}"></script>
     <script src="{% static 'home/js/magnific-popup-options.js' %}"></script>
     <script src="{% static 'home/js/custom.js' %}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // número do WhatsApp
+            const phone = '5561998401140';
+
+            // texto base com placeholder {plano}
+            const template = `Oi! Tudo bem?
+Escolhi o Plano {plano} e quero muito começar a montar minha página especial.
+Como funciona agora?`;
+
+            // para cada botão .btn-whatsapp
+            document.querySelectorAll('.btn-whatsapp').forEach(btn => {
+                const plano = btn.getAttribute('data-plan');
+                const message = template.replace('{plano}', plano);
+                const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
+                btn.setAttribute('href', url);
+                btn.setAttribute('target', '_blank');
+            });
+        });
+    </script>
 
 </body>
 
