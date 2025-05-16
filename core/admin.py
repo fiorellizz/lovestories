@@ -1,10 +1,11 @@
 from django.contrib import admin
 
-from core.models import Artista, Cliente, Musica, Imagem, ClienteImagem, Lead
+from core.models import Artista, Cliente, Musica, Imagem, ClienteImagem, Lead, Plano
 
 admin.site.register(Musica)
 admin.site.register(Artista)
 admin.site.register(Lead)
+admin.site.register(Plano)
 
 class ClienteImagemInline(admin.TabularInline):
     model = ClienteImagem

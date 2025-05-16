@@ -23,6 +23,14 @@ class Musica(Base):
     def __str__(self):
         return f"{self.titulo} - {self.autor}"
 
+class Plano(Base):
+    slug  = models.SlugField(unique=True)      # 'basico', 'premium', etc.
+    nome  = models.CharField(max_length=50)     # 'Básico', 'Premium'
+    preco = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return self.nome
+
 class Cliente(Base):
     nome_casal = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)  # ex: 'daviejulia'
@@ -33,6 +41,7 @@ class Cliente(Base):
     footer_title = models.CharField(max_length=100, default="Feliz 5 Meses Meu Amor")
     footer_subtitle = models.CharField(max_length=100, default="Que venham muitos mais meses, anos e décadas de amor, companheirismo e felicidade.")
     musicas = models.ManyToManyField(Musica, related_name='clientes')
+    plano = models.ForeignKey(Plano, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.slug
