@@ -426,6 +426,12 @@ footer {
     animation: pulse 1.5s infinite;
 }
 
+.qr-link a.qr-btn {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1);
