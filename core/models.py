@@ -41,7 +41,7 @@ class Cliente(Base):
     footer_title = models.CharField(max_length=100, default="Feliz 5 Meses Meu Amor")
     footer_subtitle = models.CharField(max_length=100, default="Que venham muitos mais meses, anos e décadas de amor, companheirismo e felicidade.")
     musicas = models.ManyToManyField(Musica, related_name='clientes')
-    plano = models.ForeignKey(Plano, on_delete=models.PROTECT)
+    plano = models.ForeignKey(Plano, on_delete=models.PROTECT, default='Basico')
 
     def __str__(self):
         return self.slug
