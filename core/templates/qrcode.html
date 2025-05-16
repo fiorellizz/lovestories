@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>QR Code de {{ cliente.nome_casal }}</h1>
+  <!-- aqui apontamos para sua view qr_code, que retorna o PNG -->
+  <img src="{% url 'qr_code' slug=cliente.slug %}" alt="QR Code de {{ cliente.nome }}">
+</body>
+
+</html>
