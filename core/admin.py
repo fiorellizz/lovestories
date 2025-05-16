@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.models import Artista, Cliente, Musica, Imagem, ClienteImagem, Lead, Plano
+from core.models import Artista, Cliente, Musica, Imagem, ClienteImagem, Lead
 
 admin.site.register(Musica)
 admin.site.register(Artista)
