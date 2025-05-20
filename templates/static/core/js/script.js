@@ -203,12 +203,12 @@ function initGallery() {
 }
 
 // Efeito de parallax no header
-window.addEventListener('scroll', function () {
-    const hero = document.querySelector('.hero');
-    const scrollPosition = window.pageYOffset;
+// window.addEventListener('scroll', function () {
+//     const hero = document.querySelector('.hero');
+//     const scrollPosition = window.pageYOffset;
 
-    hero.style.backgroundPositionY = scrollPosition * 0.5 + 'px';
-});
+//     hero.style.backgroundPositionY = scrollPosition * 0.5 + 'px';
+// });
 
 // Animação de entrada para elementos quando ficam visíveis
 document.addEventListener('DOMContentLoaded', function () {
