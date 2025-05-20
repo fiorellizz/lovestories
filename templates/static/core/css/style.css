@@ -636,9 +636,9 @@ footer a:hover {
         transform: none !important;
     }
 
-    .floating-hearts {
+    /* .floating-hearts {
         display: none;
-    }
+    } */
 
     .control-btn:hover {
         transform: none !important;
