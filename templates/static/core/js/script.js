@@ -107,50 +107,88 @@ function initMusicPlayer() {
 // Função para criar corações flutuantes
 function createFloatingHearts() {
     const container = document.querySelector('.floating-hearts');
-
-    function createHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('floating-heart');
-
-        // Estilo do coração
-        heart.style.position = 'absolute';
-        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-        heart.style.color = getRandomColor();
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = '100vh';
-        heart.style.opacity = Math.random() * 0.5 + 0.5;
-        heart.style.animation = `floatUp ${Math.random() * 5 + 5}s linear forwards`;
-        heart.innerHTML = '❤';
-
-        container.appendChild(heart);
-
-        // Remover coração após a animação
-        setTimeout(() => {
-            heart.remove();
-        }, 10000);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    const heartPool = [];
+    const maxHearts = isAndroid ? 15 : 30;
+    let lastFrameTime = 0;
+    const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
+    
+    // Pré-criar elementos e reutilizá-los
+    function createHeartPool() {
+        for(let i = 0; i < maxHearts; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '❤';
+            heart.style.cssText = `
+                position: absolute;
+                will-change: transform, opacity;
+                pointer-events: none;
+                ${!isAndroid ? 'transform: translateZ(0);' : ''}
+            `;
+            heartPool.push({element: heart, active: false});
+        }
+    }
+    
+    function getAvailableHeart() {
+        return heartPool.find(heart => !heart.active);
     }
 
-    function getRandomColor() {
-        const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
-        return colors[Math.floor(Math.random() * colors.length)];
+    function animateHeart(heart) {
+        const duration = Math.random() * 5 + 5;
+        const startTime = Date.now();
+        const startY = window.innerHeight;
+        const endY = -100;
+        const startX = Math.random() * window.innerWidth;
+        const rotation = Math.random() * 360;
+        
+        heart.element.style.cssText += `
+            left: ${startX}px;
+            top: ${startY}px;
+            font-size: ${Math.random() * 20 + 10}px;
+            color: ${colors[Math.floor(Math.random() * colors.length)]};
+            opacity: ${Math.random() * 0.5 + 0.5};
+        `;
+        
+        function update() {
+            const progress = (Date.now() - startTime) / (duration * 1000);
+            if(progress > 1) {
+                heart.active = false;
+                heart.element.style.opacity = '0';
+                return;
+            }
+            
+            const y = startY + (endY - startY) * progress;
+            const currentRotation = isAndroid ? 0 : rotation * progress;
+            
+            heart.element.style.transform = 
+                `translateY(${y}px) rotate(${currentRotation}deg)`;
+            
+            requestAnimationFrame(update);
+        }
+        
+        heart.active = true;
+        container.appendChild(heart.element);
+        requestAnimationFrame(update);
     }
 
-    // Criar corações a cada 300ms
-    setInterval(createHeart, 300);
+    function spawnHeart() {
+        const now = Date.now();
+        if(now - lastFrameTime < 300) return;
+        
+        const heart = getAvailableHeart();
+        if(heart) animateHeart(heart);
+        lastFrameTime = now;
+    }
 
-    // Adicionar estilo de animação
-    const style = document.createElement('style');
-    style.innerHTML = `
-@keyframes floatUp {
-0% {
-transform: translateY(0) rotate(0deg);
-}
-100% {
-transform: translateY(-100vh) rotate(${Math.random() * 360}deg);
-}
-}
-`;
-    document.head.appendChild(style);
+    // Inicialização
+    createHeartPool();
+    const interval = setInterval(spawnHeart, 300);
+    
+    // Cleanup
+    return () => {
+        clearInterval(interval);
+        heartPool.forEach(heart => heart.element.remove());
+    };
 }
 
 // Função para inicializar a galeria com lightbox
