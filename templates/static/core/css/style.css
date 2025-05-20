@@ -5,9 +5,28 @@
     box-sizing: border-box;
 }
 
-html,
+/* ==============================
+   Prevenir bounce/overscroll em Android
+   ============================== */
+html {
+  /* Bloqueia o overscroll em todos os eixos */
+  overscroll-behavior: none;
+  /* Bloqueia especificamente no eixo Y */
+  overscroll-behavior-y: none;
+  /* Garante que o gesto de arrastar vertical fique “preso” no navegador */
+  touch-action: pan-y;
+  /* Assegura altura total para o html */
+  height: 100%;
+}
+
 body {
-    overscroll-behavior: none;
+  /* Reforço para o <body> também */
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
+  /* Evita scroll horizontal inesperado */
+  overflow-x: hidden;
+  /* Também garantir que <body> cubra 100% de altura */
+  min-height: 100%;
 }
 
 body {
