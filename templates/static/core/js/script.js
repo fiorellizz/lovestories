@@ -107,92 +107,49 @@ function initMusicPlayer() {
 // Função para criar corações flutuantes
 function createFloatingHearts() {
     const container = document.querySelector('.floating-hearts');
-    const hearts = [];
-    const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
-    let lastCreation = 0;
 
-    // Pool de elementos pré-criados
-    class HeartPool {
-        constructor(size = 30) {
-            this.pool = Array.from({length: size}, () => this.createHeart());
-        }
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
 
-        createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'floating-heart';
-            heart.innerHTML = '❤';
-            heart.style.cssText = `
-                position: absolute;
-                will-change: transform, opacity;
-                transform: translateZ(0);
-                pointer-events: none;
-            `;
-            return heart;
-        }
-
-        getHeart() {
-            return this.pool.find(heart => !heart.parentElement);
-        }
-    }
-
-    const pool = new HeartPool(50);
-
-    function animateHeart() {
-        const now = Date.now();
-        if(now - lastCreation < 300) return;
-
-        const heart = pool.getHeart();
-        if(!heart) return;
-
-        // Configuração inicial
-        const startTime = Date.now();
-        const duration = Math.random() * 5000 + 5000;
-        const startY = window.innerHeight;
-        const rotation = Math.random() * 360;
-
-        // Estilos iniciais
-        heart.style.cssText += `
-            left: ${Math.random() * 100}vw;
-            font-size: ${Math.random() * 20 + 10}px;
-            color: ${colors[Math.random() * colors.length | 0]};
-            opacity: ${Math.random() * 0.5 + 0.5};
-        `;
+        // Estilo do coração
+        heart.style.position = 'absolute';
+        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+        heart.style.color = getRandomColor();
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '100vh';
+        heart.style.opacity = Math.random() * 0.5 + 0.5;
+        heart.style.animation = `floatUp ${Math.random() * 5 + 5}s linear forwards`;
+        heart.innerHTML = '❤';
 
         container.appendChild(heart);
 
-        // Loop de animação
-        function update() {
-            const progress = (Date.now() - startTime) / duration;
-            
-            if(progress > 1) {
-                heart.remove();
-                return;
-            }
-
-            heart.style.transform = `
-                translateY(${-progress * (100 + window.innerHeight/16)}vh)
-                rotate(${rotation * progress}deg)
-            `;
-
-            requestAnimationFrame(update);
-        }
-
-        requestAnimationFrame(update);
-        lastCreation = now;
+        // Remover coração após a animação
+        setTimeout(() => {
+            heart.remove();
+        }, 10000);
     }
 
-    // Animação sincronizada
-    function animationLoop() {
-        animateHeart();
-        requestAnimationFrame(animationLoop);
+    function getRandomColor() {
+        const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
+        return colors[Math.floor(Math.random() * colors.length)];
     }
 
-    // Iniciar
-    animationLoop();
+    // Criar corações a cada 300ms
+    setInterval(createHeart, 300);
 
-    // Style otimizado
+    // Adicionar estilo de animação
     const style = document.createElement('style');
-    style.textContent = `.floating-heart { transition: opacity 0.5s; }`;
+    style.innerHTML = `
+@keyframes floatUp {
+0% {
+transform: translateY(0) rotate(0deg);
+}
+100% {
+transform: translateY(-100vh) rotate(${Math.random() * 360}deg);
+}
+}
+`;
     document.head.appendChild(style);
 }
 
@@ -246,12 +203,12 @@ function initGallery() {
 }
 
 // Efeito de parallax no header
-// window.addEventListener('scroll', function () {
-//     const hero = document.querySelector('.hero');
-//     const scrollPosition = window.pageYOffset;
+window.addEventListener('scroll', function () {
+    const hero = document.querySelector('.hero');
+    const scrollPosition = window.pageYOffset;
 
-//     hero.style.backgroundPositionY = scrollPosition * 0.5 + 'px';
-// });
+    hero.style.backgroundPositionY = scrollPosition * 0.5 + 'px';
+});
 
 // Animação de entrada para elementos quando ficam visíveis
 document.addEventListener('DOMContentLoaded', function () {
