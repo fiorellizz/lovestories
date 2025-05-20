@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    overscroll-behavior: none;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #fff5f7;
