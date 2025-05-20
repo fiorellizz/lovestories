@@ -43,6 +43,11 @@ https://www.tooplate.com/view/2131-wedding-lite
   --font-weight-bold: 700;
 }
 
+html,
+body {
+  overscroll-behavior: none;
+}
+
 body {
   background: var(--white-color);
   font-family: var(--body-font-family);
