@@ -26,9 +26,11 @@ SECRET_KEY = 'django-insecure-2xbxbhpfmy^&1cd4%)-#9u&-q_)u-1lp3)7rzut@8xpm8bj%l_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['168.231.88.86', 'lovestories.com.br']
-# ALLOWED_HOSTS = ['*']
-
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+elif not DEBUG:
+    # SECURITY WARNING: define the correct hosts in production!
+    ALLOWED_HOSTS = ['168.231.88.86', 'lovestories.com.br']
 
 # Application definition
 
@@ -129,8 +131,11 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/lovestories/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+elif not DEBUG:
+    MEDIA_ROOT = '/var/www/lovestories/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
