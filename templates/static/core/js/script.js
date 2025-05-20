@@ -236,5 +236,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Verificar visibilidade inicial e em scroll
     checkVisibility();
-    window.addEventListener('scroll', checkVisibility);
+    function debounce(func, wait = 10) {
+        let timeout;
+        return () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(func, wait);
+        };
+    }
+    window.addEventListener('scroll', debounce(checkVisibility));
 });

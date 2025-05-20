@@ -6,7 +6,7 @@
 }
 
 html {
-    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -14,9 +14,11 @@ body {
     background-color: #fff5f7;
     color: #333;
     line-height: 1.6;
-
-    overscroll-behavior: none;
     min-height: 100%;
+    overflow-x: hidden; /*se n der certo, pode tirar*/
+    overflow-y: scroll; /* Força a barra de scroll permanente */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .container {
@@ -628,6 +630,18 @@ footer a:hover {
 
     .gallery-container {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .gallery-item:hover {
+        transform: none !important;
+    }
+
+    .floating-hearts {
+        display: none;
+    }
+
+    .control-btn:hover {
+        transform: none !important;
     }
 }
 
