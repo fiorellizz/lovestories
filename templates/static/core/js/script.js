@@ -108,9 +108,16 @@ function initMusicPlayer() {
 function createFloatingHearts() {
     const container = document.querySelector('.floating-hearts');
     const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
-    const isAndroid = /Android/i.test(navigator.userAgent);
 
-    // Estilo de animação (adicionado apenas uma vez)
+    // 🔍 Detecção de Android aprimorada
+    let isAndroid = false;
+    if (navigator.userAgentData) {
+        isAndroid = navigator.userAgentData.platform === 'Android';
+    } else {
+        isAndroid = /Android/i.test(navigator.userAgent);
+    }
+
+    // Estilo de animação (uma vez só)
     if (!document.getElementById('floatingHeartsStyle')) {
         const style = document.createElement('style');
         style.id = 'floatingHeartsStyle';
@@ -123,7 +130,18 @@ function createFloatingHearts() {
     }
 
     let heartCount = 0;
-    const maxHearts = isAndroid ? 20 : 50; // Limita quantidade ativa
+    const maxHearts = isAndroid ? 20 : 50;
+    const interval = isAndroid ? 1000 : 300;
+
+    // 🧠 Scroll awareness para pausar criação de corações
+    let isScrolling = false;
+    let scrollTimeout;
+
+    window.addEventListener('scroll', () => {
+        isScrolling = true;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => isScrolling = false, 500);
+    });
 
     function createHeart() {
         if (heartCount >= maxHearts) return;
@@ -154,19 +172,17 @@ function createFloatingHearts() {
         container.appendChild(heart);
         heartCount++;
 
-        // Remove após animação
         setTimeout(() => {
             heart.remove();
             heartCount--;
         }, duration * 1000);
     }
 
-    // Usa requestAnimationFrame para suavizar chamadas
+    // 🧠 Loop com pausa durante scroll
     let lastTime = 0;
-    const interval = isAndroid ? 800 : 300;
 
     function loop(timestamp) {
-        if (timestamp - lastTime >= interval) {
+        if (!isScrolling && timestamp - lastTime >= interval) {
             createHeart();
             lastTime = timestamp;
         }
@@ -237,16 +253,24 @@ window.addEventListener('scroll', function () {
 document.addEventListener('DOMContentLoaded', function () {
     const sections = document.querySelectorAll('section');
 
-    function checkVisibility() {
-        sections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
+    // ✅ Substitui checkVisibility() por IntersectionObserver
+    function observeSections() {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.25 });
 
-            if (sectionTop < windowHeight * 0.75) {
-                section.classList.add('visible');
-                section.style.opacity = '1';
-                section.style.transform = 'translateY(0)';
-            }
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(50px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(section);
         });
     }
 
@@ -258,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Verificar visibilidade inicial e em scroll
-    checkVisibility();
+    observeSections(); // chama ao carregar
     function debounce(func, wait = 10) {
         let timeout;
         return () => {
