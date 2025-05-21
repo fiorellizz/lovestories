@@ -108,40 +108,35 @@ function initMusicPlayer() {
 function createFloatingHearts() {
     const container = document.querySelector('.floating-hearts');
     const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
-
-    // Detectar se é Android
     const isAndroid = /Android/i.test(navigator.userAgent);
 
-    // Adicionar estilo de animação apenas uma vez
+    // Estilo de animação (adicionado apenas uma vez)
     if (!document.getElementById('floatingHeartsStyle')) {
         const style = document.createElement('style');
         style.id = 'floatingHeartsStyle';
         style.innerHTML = `
 @keyframes floatUp {
-    0% {
-        transform: translateY(0) rotate(0deg);
-    }
-    100% {
-        transform: translateY(-100vh) rotate(var(--rotate, 0deg));
-    }
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-100vh) rotate(var(--rotate, 0deg)); opacity: 0; }
 }`;
         document.head.appendChild(style);
     }
 
+    let heartCount = 0;
+    const maxHearts = isAndroid ? 20 : 50; // Limita quantidade ativa
+
     function createHeart() {
+        if (heartCount >= maxHearts) return;
+
         const heart = document.createElement('div');
         heart.className = 'floating-heart';
-
-        // Cálculos
         const fontSize = Math.random() * 20 + 10;
         const color = colors[Math.floor(Math.random() * colors.length)];
         const left = Math.random() * 100;
         const opacity = Math.random() * 0.5 + 0.5;
-        // Para Android, menos corações e animação mais rápida
-        const duration = isAndroid ? (Math.random() * 2 + 3) : (Math.random() * 5 + 5);
+        const duration = isAndroid ? Math.random() * 2 + 3 : Math.random() * 5 + 5;
         const rotate = Math.random() * 360;
 
-        // Estilo do coração
         heart.style.cssText = `
             position: absolute;
             font-size: ${fontSize}px;
@@ -152,20 +147,33 @@ function createFloatingHearts() {
             animation: floatUp ${duration}s linear forwards;
             --rotate: ${rotate}deg;
             will-change: transform, opacity;
+            pointer-events: none;
         `;
-        heart.innerHTML = '❤';
+        heart.textContent = '❤';
 
         container.appendChild(heart);
+        heartCount++;
 
-        // Remover coração após a animação
+        // Remove após animação
         setTimeout(() => {
             heart.remove();
+            heartCount--;
         }, duration * 1000);
     }
 
-    // Para Android, criar menos corações (intervalo maior)
+    // Usa requestAnimationFrame para suavizar chamadas
+    let lastTime = 0;
     const interval = isAndroid ? 800 : 300;
-    setInterval(createHeart, interval);
+
+    function loop(timestamp) {
+        if (timestamp - lastTime >= interval) {
+            createHeart();
+            lastTime = timestamp;
+        }
+        requestAnimationFrame(loop);
+    }
+
+    requestAnimationFrame(loop);
 }
 
 // Função para inicializar a galeria com lightbox
