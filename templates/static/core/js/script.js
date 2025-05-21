@@ -104,10 +104,13 @@ function initMusicPlayer() {
     audio.addEventListener('ended', nextTrack);
 }
 
-// Função otimizada para criar corações flutuantes
+// Função otimizada para criar corações flutuantes com detecção de Android
 function createFloatingHearts() {
     const container = document.querySelector('.floating-hearts');
     const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
+
+    // Detectar se é Android
+    const isAndroid = /Android/i.test(navigator.userAgent);
 
     // Adicionar estilo de animação apenas uma vez
     if (!document.getElementById('floatingHeartsStyle')) {
@@ -134,7 +137,8 @@ function createFloatingHearts() {
         const color = colors[Math.floor(Math.random() * colors.length)];
         const left = Math.random() * 100;
         const opacity = Math.random() * 0.5 + 0.5;
-        const duration = Math.random() * 5 + 5;
+        // Para Android, menos corações e animação mais rápida
+        const duration = isAndroid ? (Math.random() * 2 + 3) : (Math.random() * 5 + 5);
         const rotate = Math.random() * 360;
 
         // Estilo do coração
@@ -159,7 +163,9 @@ function createFloatingHearts() {
         }, duration * 1000);
     }
 
-    setInterval(createHeart, 300);
+    // Para Android, criar menos corações (intervalo maior)
+    const interval = isAndroid ? 800 : 300;
+    setInterval(createHeart, interval);
 }
 
 // Função para inicializar a galeria com lightbox
