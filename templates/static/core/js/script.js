@@ -127,7 +127,7 @@ function createFloatingHearts() {
         // Remover coração após a animação
         setTimeout(() => {
             heart.remove();
-        }, 6500);
+        }, 10000);
     }
 
     function getRandomColor() {
@@ -136,7 +136,7 @@ function createFloatingHearts() {
     }
 
     // Criar corações a cada 300ms
-    setInterval(createHeart, 500);
+    setInterval(createHeart, 300);
 
     // Adicionar estilo de animação
     const style = document.createElement('style');
