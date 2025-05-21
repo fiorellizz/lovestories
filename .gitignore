@@ -6,3 +6,9 @@ db.sqlite3
 
 # Arquivos de Cache
 __pycache__/
+
+# Arquivo de Migração
+0001_initial.py
+
+# Arquivos de Midia local
+media

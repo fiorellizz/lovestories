@@ -104,22 +104,51 @@ function initMusicPlayer() {
     audio.addEventListener('ended', nextTrack);
 }
 
-// Função para criar corações flutuantes
+// Função otimizada para criar corações flutuantes
 function createFloatingHearts() {
     const container = document.querySelector('.floating-hearts');
+    const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
+
+    // Adicionar estilo de animação apenas uma vez
+    if (!document.getElementById('floatingHeartsStyle')) {
+        const style = document.createElement('style');
+        style.id = 'floatingHeartsStyle';
+        style.innerHTML = `
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-100vh) rotate(var(--rotate, 0deg));
+    }
+}`;
+        document.head.appendChild(style);
+    }
 
     function createHeart() {
         const heart = document.createElement('div');
-        heart.classList.add('floating-heart');
+        heart.className = 'floating-heart';
+
+        // Cálculos
+        const fontSize = Math.random() * 20 + 10;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const left = Math.random() * 100;
+        const opacity = Math.random() * 0.5 + 0.5;
+        const duration = Math.random() * 5 + 5;
+        const rotate = Math.random() * 360;
 
         // Estilo do coração
-        heart.style.position = 'absolute';
-        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-        heart.style.color = getRandomColor();
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = '100vh';
-        heart.style.opacity = Math.random() * 0.5 + 0.5;
-        heart.style.animation = `floatUp ${Math.random() * 5 + 5}s linear forwards`;
+        heart.style.cssText = `
+            position: absolute;
+            font-size: ${fontSize}px;
+            color: ${color};
+            left: ${left}vw;
+            top: 100vh;
+            opacity: ${opacity};
+            animation: floatUp ${duration}s linear forwards;
+            --rotate: ${rotate}deg;
+            will-change: transform, opacity;
+        `;
         heart.innerHTML = '❤';
 
         container.appendChild(heart);
@@ -127,30 +156,10 @@ function createFloatingHearts() {
         // Remover coração após a animação
         setTimeout(() => {
             heart.remove();
-        }, 10000);
+        }, duration * 1000);
     }
 
-    function getRandomColor() {
-        const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
-
-    // Criar corações a cada 300ms
     setInterval(createHeart, 300);
-
-    // Adicionar estilo de animação
-    const style = document.createElement('style');
-    style.innerHTML = `
-@keyframes floatUp {
-0% {
-transform: translateY(0) rotate(0deg);
-}
-100% {
-transform: translateY(-100vh) rotate(${Math.random() * 360}deg);
-}
-}
-`;
-    document.head.appendChild(style);
 }
 
 // Função para inicializar a galeria com lightbox
