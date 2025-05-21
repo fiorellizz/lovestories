@@ -104,92 +104,53 @@ function initMusicPlayer() {
     audio.addEventListener('ended', nextTrack);
 }
 
-// Função otimizada para criar corações flutuantes com detecção de Android
+// Função para criar corações flutuantes
 function createFloatingHearts() {
     const container = document.querySelector('.floating-hearts');
-    const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
-
-    // 🔍 Detecção de Android aprimorada
-    let isAndroid = false;
-    if (navigator.userAgentData) {
-        isAndroid = navigator.userAgentData.platform === 'Android';
-    } else {
-        isAndroid = /Android/i.test(navigator.userAgent);
-    }
-
-    // Estilo de animação (uma vez só)
-    if (!document.getElementById('floatingHeartsStyle')) {
-        const style = document.createElement('style');
-        style.id = 'floatingHeartsStyle';
-        style.innerHTML = `
-@keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(-100vh) rotate(var(--rotate, 0deg)); opacity: 0; }
-}`;
-        document.head.appendChild(style);
-    }
-
-    let heartCount = 0;
-    const maxHearts = isAndroid ? 20 : 50;
-    const interval = isAndroid ? 1000 : 300;
-
-    // 🧠 Scroll awareness para pausar criação de corações
-    let isScrolling = false;
-    let scrollTimeout;
-
-    window.addEventListener('scroll', () => {
-        isScrolling = true;
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => isScrolling = false, 500);
-    });
 
     function createHeart() {
-        if (heartCount >= maxHearts) return;
-
         const heart = document.createElement('div');
-        heart.className = 'floating-heart';
-        const fontSize = Math.random() * 20 + 10;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const left = Math.random() * 100;
-        const opacity = Math.random() * 0.5 + 0.5;
-        const duration = isAndroid ? Math.random() * 2 + 3 : Math.random() * 5 + 5;
-        const rotate = Math.random() * 360;
+        heart.classList.add('floating-heart');
 
-        heart.style.cssText = `
-            position: absolute;
-            font-size: ${fontSize}px;
-            color: ${color};
-            left: ${left}vw;
-            top: 100vh;
-            opacity: ${opacity};
-            animation: floatUp ${duration}s linear forwards;
-            --rotate: ${rotate}deg;
-            will-change: transform, opacity;
-            pointer-events: none;
-        `;
-        heart.textContent = '❤';
+        // Estilo do coração
+        heart.style.position = 'absolute';
+        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+        heart.style.color = getRandomColor();
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '100vh';
+        heart.style.opacity = Math.random() * 0.5 + 0.5;
+        heart.style.animation = `floatUp ${Math.random() * 5 + 5}s linear forwards`;
+        heart.innerHTML = '❤';
 
         container.appendChild(heart);
-        heartCount++;
 
+        // Remover coração após a animação
         setTimeout(() => {
             heart.remove();
-            heartCount--;
-        }, duration * 1000);
+        }, 10000);
     }
 
-    // 🧠 Loop com pausa durante scroll
-    let lastTime = 0;
-
-    function loop(timestamp) {
-        if (!isScrolling && timestamp - lastTime >= interval) {
-            createHeart();
-            lastTime = timestamp;
-        }
-        requestAnimationFrame(loop);
+    function getRandomColor() {
+        const colors = ['#ff6b9d', '#e60023', '#4a90e2', '#ff9999'];
+        return colors[Math.floor(Math.random() * colors.length)];
     }
 
-    requestAnimationFrame(loop);
+    // Criar corações a cada 300ms
+    setInterval(createHeart, 300);
+
+    // Adicionar estilo de animação
+    const style = document.createElement('style');
+    style.innerHTML = `
+@keyframes floatUp {
+0% {
+transform: translateY(0) rotate(0deg);
+}
+100% {
+transform: translateY(-100vh) rotate(${Math.random() * 360}deg);
+}
+}
+`;
+    document.head.appendChild(style);
 }
 
 // Função para inicializar a galeria com lightbox
@@ -253,24 +214,16 @@ window.addEventListener('scroll', function () {
 document.addEventListener('DOMContentLoaded', function () {
     const sections = document.querySelectorAll('section');
 
-    // ✅ Substitui checkVisibility() por IntersectionObserver
-    function observeSections() {
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.25 });
+    function checkVisibility() {
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
 
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(50px)';
-            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            observer.observe(section);
+            if (sectionTop < windowHeight * 0.75) {
+                section.classList.add('visible');
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+            }
         });
     }
 
@@ -282,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Verificar visibilidade inicial e em scroll
-    observeSections(); // chama ao carregar
+    checkVisibility();
     function debounce(func, wait = 10) {
         let timeout;
         return () => {
