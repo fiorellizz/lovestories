@@ -975,6 +975,7 @@ strong {
     position: relative;
     z-index: 0;
     padding: 30px 15px !important;
+    background-position: 80% 75%;
   }
 
   .save-the-date-wrap {
@@ -989,7 +990,7 @@ strong {
   }
 
   .save-the-date-thumb {
-    transform: scale(0.7);
+    transform: scale(0.9);
     margin: -15px auto 0;
   }
 }
