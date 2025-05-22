@@ -52,10 +52,6 @@ def core(request):
     # GET (ou pós-redirect) cai aqui
     return render(request, 'home.html')
 
-def qr_page(request, slug):
-    cliente = get_object_or_404(Cliente, slug=slug)
-    return render(request, 'qrcode.html', { 'cliente': cliente })
-
 def qr_code(request, slug):
     # garante que o cliente existe
     get_object_or_404(Cliente, slug=slug)
