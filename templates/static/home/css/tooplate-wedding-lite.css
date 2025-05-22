@@ -966,9 +966,25 @@ strong {
 
 @media screen and (max-width: 575px) {
   .hero-container {
-    margin-right: 12px;
-    margin-left: 12px;
-    margin-bottom: 12px;
+    position: relative;
+    z-index: 0;
+    padding: 30px 15px !important;
+  }
+
+  .hero-section .row {
+    flex-direction: column;
+  }
+
+  .save-the-date-wrap {
+    position: relative;
+    z-index: 2;
+    margin-top: 30px;
+    order: 2;
+  }
+
+  .save-the-date-thumb {
+    transform: scale(0.8);
+    margin: -15px auto 0;
   }
 }
 
@@ -994,7 +1010,25 @@ strong {
   }
 
   .hero-container {
-    padding: 30px;
+    position: relative;
+    z-index: 0;
+    padding: 30px 15px !important;
+  }
+
+  .hero-section .row {
+    flex-direction: column;
+  }
+
+  .save-the-date-wrap {
+    position: relative;
+    z-index: 2;
+    margin-top: 30px;
+    order: 2;
+  }
+
+  .save-the-date-thumb {
+    transform: scale(0.8);
+    margin: -15px auto 0;
   }
 }
 
