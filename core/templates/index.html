@@ -4,7 +4,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{{ cliente.nome_casal }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link
@@ -31,6 +32,15 @@
     {% endfor %}
 
     <link rel="shortcut icon" href="{% static 'core/img/favicon.png' %}" type="image/x-icon">
+
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/duration.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+    <script>
+        dayjs.extend(dayjs_plugin_duration);
+        dayjs.extend(dayjs_plugin_relativeTime);
+    </script>
+
 </head>
 
 <body>
@@ -193,16 +203,21 @@
         </div>
     </section>
 
-    <footer>
+    <section class="qr-code-section">
+        <div class="container">
+            <h2>Compartilhe com Amor</h2>
+            <p>Escaneie o QR Code abaixo para acessar esta página com facilidade.</p>
+            <div class="qr-code-wrapper">
+                <img src="{% url 'qr_code' slug=cliente.slug %}" alt="QR Code do casal {{ cliente.nome_casal }}">
+            </div>
+        </div>
+    </section>
+
+    <footer> 
         <div class="footer-content">
             <h3>{{ cliente.footer_title }}</h3>
             <p>{{ cliente.footer_subtitle }}</p>
             <div class="heart-icon">❤️</div>
-            <div class="qr-link" style="margin-top: 1rem;">
-                <a href="{% url 'qr_page' slug=cliente.slug %}" target="_blank" class="qr-btn">
-                    📲 Clique aqui para gerar seu QR Code
-                </a>
-            </div>
         </div>
     </footer>
 
@@ -211,44 +226,33 @@
     <script src="{% static 'core/js/script_otimized.js' %}"></script>
 
     <script>
+        dayjs.extend(dayjs_plugin_duration);
+        dayjs.extend(dayjs_plugin_relativeTime);
 
-        // Inicializar contador
-        updateCountdown();
-
-        // Função para atualizar o contador
         function updateCountdown() {
-            const startDate = new Date('{{ cliente.data_inicio|date:"Y-m-d" }}');
-            const currentDate = new Date();
+            const start = dayjs('{{ cliente.data_inicio|date:"Y-m-d" }}');
+            const now = dayjs();
 
-            // Diferença total em milissegundos
-            const timeDiff = currentDate - startDate;
-
-            // Calcular meses
-            let months = (currentDate.getFullYear() - startDate.getFullYear()) * 12;
-            months += currentDate.getMonth() - startDate.getMonth();
-
-            // Ajustar meses se o dia atual for menor que o dia de início
-            if (currentDate.getDate() < startDate.getDate()) {
-                months--;
+            if (!start.isValid()) {
+                console.error("Data de início inválida:", start);
+                return;
             }
 
-            // Calcular dias restantes
-            const tempDate = new Date(startDate);
-            tempDate.setMonth(startDate.getMonth() + months);
-            const daysDiff = Math.max(0, Math.floor((currentDate - tempDate) / (1000 * 60 * 60 * 24)));
-
-            // Calcular horas e minutos restantes (desde o início do dia atual)
-            const hours = currentDate.getHours();
-            const minutes = currentDate.getMinutes();
+            const months = now.diff(start, 'month');
+            const lastMonthDate = start.add(months, 'month');
+            const days = now.diff(lastMonthDate, 'day');
 
             document.getElementById('months').textContent = months;
-            document.getElementById('days').textContent = daysDiff;
-            document.getElementById('hours').textContent = hours;
-            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = now.hour();
+            document.getElementById('minutes').textContent = now.minute();
 
             setTimeout(updateCountdown, 60000);
         }
+
+        updateCountdown();
     </script>
+
 </body>
 
 </html>
