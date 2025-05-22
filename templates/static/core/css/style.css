@@ -446,6 +446,29 @@ p {
     transform: scale(1.05);
 }
 
+.download-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 30px;
+    background-color: #e60023;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid #e60023;
+}
+
+.download-btn:hover {
+    background-color: #ff1a3d;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(230, 0, 35, 0.3);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+}
+
 /* Footer */
 footer {
     background-color: #e60023;

@@ -67,5 +67,13 @@ def qr_code(request, slug):
     img.save(buffer, format='PNG')
     buffer.seek(0)
 
+    # Verifica se é para download
+    if request.GET.get('download'):
+        cliente = get_object_or_404(Cliente, slug=slug)
+        response = HttpResponse(buffer, content_type='image/png')
+        filename = f'qr-code-{cliente.slug}.png'
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
+
     # retorna como imagem PNG
     return HttpResponse(buffer, content_type='image/png')

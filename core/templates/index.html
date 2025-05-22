@@ -210,6 +210,9 @@
             <div class="qr-code-wrapper">
                 <img src="{% url 'qr_code' slug=cliente.slug %}" alt="QR Code do casal {{ cliente.nome_casal }}">
             </div>
+            <a href="{% url 'qr_code' slug=cliente.slug %}?download=1" class="download-btn">
+                Baixar QR Code
+            </a>
         </div>
     </section>
 
