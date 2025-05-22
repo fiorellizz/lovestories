@@ -873,28 +873,6 @@ strong {
 
 @media screen and (max-width: 767px) {
 
-  .hero-container {
-    position: relative;
-    z-index: 0;
-    padding: 30px 15px !important;
-  }
-
-  .hero-section .row {
-    flex-direction: column;
-  }
-
-  .save-the-date-wrap {
-    position: relative;
-    z-index: 2;
-    margin-top: 30px;
-    order: 2;
-  }
-
-  .save-the-date-thumb {
-    transform: scale(0.8);
-    margin: -15px auto 0;
-  }
-
   .section-divider {
     width: 100%;
     height: 1px;
