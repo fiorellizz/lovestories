@@ -976,6 +976,7 @@ strong {
     z-index: 0;
     padding: 30px 15px !important;
     background-position: 80% 75%;
+    background-size: 500px;
   }
 
   .save-the-date-wrap {
