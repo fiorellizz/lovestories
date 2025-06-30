@@ -42,7 +42,7 @@ Confira uma página de exemplo:
 1. Clone o repositório:
 ```bash
 git clone https://github.com/fiorellizz/lovestories.git
-cd love-stories
+cd lovestories
 ```
 
 2. Configure o ambiente virtual:
